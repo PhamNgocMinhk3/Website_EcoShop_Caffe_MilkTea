@@ -174,19 +174,4 @@ npm start
 - License: MIT (hoặc cập nhật theo dự án của bạn).
 
 
-
-## 🗺️ Sơ đồ luồng sử dụng cơ bản
-
-```mermaid
-flowchart TD
-    A[Trang chủ] --> B[Đăng nhập/Đăng ký]
-    B --> C[Chọn bàn/Sản phẩm]
-    C --> D[Thêm vào giỏ hàng]
-    D --> E[Thanh toán]
-    E --> F[Nhận thông báo/Kết quả]
-    F --> G[Quản lý tài khoản (nếu là admin)]
-    G --> H[Dashboard/Quản lý/Thống kê]
-```
-
-
 > **Mọi thắc mắc, góp ý hoặc cần hỗ trợ, hãy liên hệ qua trang [Liên hệ](http://localhost:4200/contact) hoặc tạo issue trên GitHub!** 
