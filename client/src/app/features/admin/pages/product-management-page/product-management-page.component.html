@@ -1,0 +1,67 @@
+<div class="product-management-container">
+
+    <header class="page-header">
+        <div class="header-anim">
+            <h1 class="page-title">Quản Lý Sản Phẩm</h1>
+            <p class="page-subtitle">Thêm, sửa, xóa và quản lý các sản phẩm của bạn.</p>
+        </div>
+        <button (click)="openAddProductModal()" class="btn btn-primary header-anim" style="opacity: 1;">
+            Thêm Sản Phẩm
+        </button>
+    </header>
+
+    <main *ngIf="productsResponse$ | async as response; else loading">
+        <ng-container *ngIf="response.items.length > 0; else emptyState">
+
+            <div class="product-grid">
+                <app-product-card *ngFor="let product of response.items" [product]="product"
+                    (edit)="openEditProductModal($event)" (delete)="openDeleteConfirmModal($event)">
+                </app-product-card>
+            </div>
+
+            <app-pagination [currentPage]="response.pageNumber" [totalPages]="response.totalPages"
+                [totalCount]="response.totalCount" [pageSize]="6" (pageChange)="onPageChange($event)">
+            </app-pagination>
+
+        </ng-container>
+    </main>
+
+    <ng-template #loading>
+        <div class="loading-state">
+            <div class="loader"></div>
+            <p>Đang tải dữ liệu...</p>
+        </div>
+    </ng-template>
+
+    <ng-template #emptyState>
+        <div class="empty-state">
+            <span class="material-symbols-outlined empty-icon">inventory_2</span>
+            <h3>Chưa có sản phẩm nào</h3>
+            <p>Hãy bắt đầu bằng cách thêm một sản phẩm mới.</p>
+        </div>
+    </ng-template>
+</div>
+
+<app-modal [isOpen]="isFormModalOpen" (close)="isFormModalOpen = false">
+    <app-product-form [productToEdit]="selectedProduct" (formSaved)="handleFormSave($event)"
+        (formCanceled)="isFormModalOpen = false">
+    </app-product-form>
+</app-modal>
+
+<app-modal [isOpen]="isDeleteModalOpen" (close)="isDeleteModalOpen = false">
+    <div class="confirm-dialog">
+        <div class="dialog-header">
+            <div class="dialog-icon-wrapper">
+                <span class="material-symbols-outlined">warning</span>
+            </div>
+            <div class="dialog-title-content">
+                <h3>Xóa sản phẩm</h3>
+                <p>Bạn có chắc chắn muốn xóa sản phẩm này không? Hành động này không thể được hoàn tác.</p>
+            </div>
+        </div>
+        <div class="dialog-actions">
+            <button (click)="isDeleteModalOpen = false" type="button" class="btn btn-secondary">Hủy</button>
+            <button (click)="handleDeleteConfirm()" type="button" class="btn btn-danger">Xóa</button>
+        </div>
+    </div>
+</app-modal>

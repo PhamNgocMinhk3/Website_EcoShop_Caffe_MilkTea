@@ -1,0 +1,18 @@
+/* Sử dụng lại các biến màu và style chung từ trang quản lý sản phẩm */
+@import "../product-management-page/product-management-page.component.css";
+
+.table-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.empty-state .empty-icon {
+  font-size: 4rem;
+  color: #9ca3af;
+}
+
+.dialog-icon-wrapper.danger {
+  background-color: #fee2e2;
+  color: #dc2626;
+}

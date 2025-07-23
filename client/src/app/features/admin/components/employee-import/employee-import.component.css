@@ -1,0 +1,117 @@
+.form-container {
+  background-color: white;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+}
+.form-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+.form-title-highlight {
+  color: #4f46e5;
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.import-body {
+  margin: 1.5rem 0;
+}
+.import-description {
+  color: #4b5563;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.file-drop-area {
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.file-drop-area:hover {
+  border-color: #4f46e5;
+  background-color: #f5f3ff;
+}
+.file-drop-area.has-file {
+  border-color: #22c55e;
+  background-color: #f0fdf4;
+}
+
+.file-input {
+  display: none;
+}
+.file-label {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #6b7280;
+}
+.file-icon {
+  font-size: 3rem;
+  color: #9ca3af;
+}
+.file-drop-area.has-file .file-icon {
+  color: #22c55e;
+}
+
+.file-name {
+  color: #166534;
+  font-weight: 500;
+}
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1.5rem;
+}
+.loader-sm {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-bottom-color: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tái sử dụng style nút */
+.btn {
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-primary {
+  background-color: #4f46e5;
+  color: white;
+}
+.btn-secondary {
+  background-color: white;
+  border-color: #d1d5db;
+  color: #374151;
+}
+.btn:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}

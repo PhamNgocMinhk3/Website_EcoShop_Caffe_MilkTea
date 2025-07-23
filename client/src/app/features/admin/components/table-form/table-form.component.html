@@ -1,0 +1,14 @@
+<div class="form-container">
+    <h3 class="form-title">{{ tableToEdit ? 'Sửa Tên Bàn' : 'Thêm Bàn Mới' }}</h3>
+    <form [formGroup]="tableForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="tableName" class="form-label">Tên bàn</label>
+            <input id="tableName" type="text" formControlName="name" class="form-control"
+                placeholder="Ví dụ: Bàn 1, Bàn VIP 2">
+        </div>
+        <div class="form-actions">
+            <button type="button" (click)="formCanceled.emit()" class="btn btn-secondary">Hủy</button>
+            <button type="submit" [disabled]="tableForm.invalid" class="btn btn-primary">Lưu</button>
+        </div>
+    </form>
+</div>

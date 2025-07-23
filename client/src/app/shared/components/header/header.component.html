@@ -1,0 +1,71 @@
+<header class="main-header">
+    <div class="container">
+        <a routerLink="/home" class="logo">The Alley</a>
+        <nav>
+            <ul>
+                <li><a routerLink="/home">Trang chủ</a></li>
+                <li><a routerLink="/products">Sản phẩm</a></li>
+                <li><a routerLink="/contact">Liên hệ</a></li>
+            </ul>
+        </nav>
+        <div class="actions">
+            <button class="cart-button" (click)="toggleCart()">
+                <span>Giỏ hàng</span>
+                <span class="cart-badge" *ngIf="totalCartItems > 0">{{ totalCartItems }}</span>
+            </button>
+
+            <ng-container *ngIf="!isLoggedIn">
+                <a routerLink="/auth/login" class="login-button">Đăng nhập</a>
+            </ng-container>
+            <ng-container *ngIf="isLoggedIn">
+                <button (click)="logout()" class="logout-button">Đăng xuất</button>
+            </ng-container>
+
+        </div>
+    </div>
+</header>
+
+<!-- Modal Giỏ hàng -->
+<div class="cart-modal-overlay" [class.open]="isCartOpen" (click)="toggleCart()"></div>
+<div class="cart-modal" [class.open]="isCartOpen">
+    <div class="cart-header">
+        <h3>Giỏ hàng của bạn</h3>
+        <button class="close-button" (click)="toggleCart()">×</button>
+    </div>
+    <div class="cart-body">
+        <div *ngIf="cartItems.length > 0; else emptyCart">
+            <div *ngFor="let item of cartItems" class="cart-item">
+                <img [src]="item.imageUrl" alt="{{ item.name }}"
+                    onerror="this.src='https://placehold.co/100x100/eee/ccc?text=Img'">
+                <div class="item-info">
+                    <p class="item-name">{{ item.name }}</p>
+
+                    <small class="item-options">Size: {{item.size}} | Topping: {{ getToppingNames(item.selectedToppings)
+                        }}</small>
+
+                    <p class="item-price">{{ item.finalPrice | number }}đ</p>
+
+                    <div class="item-controls">
+                        <div class="quantity-control">
+                            <button (click)="decreaseItemQuantity(item)">-</button>
+                            <span>{{ item.quantity }}</span>
+                            <button (click)="increaseItemQuantity(item)">+</button>
+                        </div>
+                        <button class="remove-button" (click)="removeItem(item)">Xóa</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <ng-template #emptyCart>
+            <p class="empty-message">Giỏ hàng của bạn đang trống.</p>
+        </ng-template>
+    </div>
+    <div class="cart-footer" *ngIf="cartItems.length > 0">
+        <div class="total-price">
+            <span>Tổng cộng:</span>
+            <span>{{ totalPrice | number }}đ</span>
+        </div>
+        <button class="checkout-button" (click)="goToCheckout()">Thanh Toán</button>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<app-header></app-header>
+
+<main class="home-page">
+    <!-- Section 1: Hero - Lời chào đầu tiên -->
+    <section class="hero-section">
+        <div class="hero-background">
+            <div class="bubble b1"></div>
+            <div class="bubble b2"></div>
+            <div class="bubble b3"></div>
+            <div class="bubble b4"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Câu chuyện từ những lá trà</h1>
+            <p class="hero-subtitle">Mỗi sản phẩm của The Alley là một tác phẩm nghệ thuật, kết tinh từ những nguyên
+                liệu hảo hạng và tâm huyết của người pha chế.</p>
+            <button class="hero-cta" (click)="scrollToFeatures()">Khám phá ngay</button>
+        </div>
+    </section>
+
+    <!-- Section 2: Features - Hiệu ứng cuộn Parallax -->
+    <section class="feature-scroll-section" #featureSection>
+        <div class="feature-card-wrapper">
+
+            <div class="feature-card card-1">
+                <div class="card-image">
+                    <img src="Asset/image/1.jpg" alt="Lá trà tươi">
+                </div>
+                <div class="card-content">
+                    <h2>Nguyên liệu tươi ngon</h2>
+                    <p>Chúng tôi chỉ lựa chọn những lá trà được thu hái thủ công và những nguyên liệu tự nhiên nhất.</p>
+                </div>
+            </div>
+
+            <div class="feature-card card-2">
+                <div class="card-image">
+                    <img src="https://i.pinimg.com/736x/00/67/be/0067be978eb75ee8e6262af14e3fff33.jpg"
+                        alt="Pha chế trà sữa">
+                </div>
+                <div class="card-content">
+                    <h2>Công thức độc quyền</h2>
+                    <p>Bí quyết của The Alley nằm ở công thức pha chế độc đáo, tạo nên hương vị không thể nhầm lẫn.</p>
+                </div>
+            </div>
+
+            <div class="feature-card card-3">
+                <div class="card-image">
+                    <img src="Asset/image/2.jpg" alt="Không gian quán">
+                </div>
+                <div class="card-content">
+                    <h2>Trải nghiệm tuyệt vời</h2>
+                    <p>Không chỉ là một ly trà sữa, đó là một không gian thư giãn và những khoảnh khắc đáng nhớ.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<app-footer></app-footer>

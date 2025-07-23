@@ -1,0 +1,21 @@
+<div class="product-card">
+    <div class="card-image-container">
+        <img [src]="product.imageUrl" [alt]="product.name" class="card-image"
+            onerror="this.onerror=null;this.src='https://placehold.co/400x300/e2e8f0/a0aec0?text=L%E1%BB%97i+t%E1%BA%A3i+%E1%BA%A3nh';">
+    </div>
+    <div class="card-content">
+        <h3 class="card-title" [title]="product.name">{{ product.name }}</h3>
+        <p class="card-price">{{ product.price | number:'1.0-0' }} đ</p>
+        <p class="card-description">{{ product.description.substring(0, 100) }}{{ product.description.length > 100 ?
+            '...' : '' }}</p>
+        <p class="card-purchase-count">Lượt mua: {{ product.purchaseCount || 0 }}</p>
+    </div>
+    <div class="card-actions">
+        <button (click)="onEdit()" class="action-btn" title="Sửa">
+            <span class="material-symbols-outlined">Sửa</span>
+        </button>
+        <button (click)="onDelete()" class="action-btn" title="Xóa">
+            <!-- <span class="material-symbols-outlined">delete</span> -->
+        </button>
+    </div>
+</div>

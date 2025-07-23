@@ -1,0 +1,43 @@
+<!-- PASTE TOÀN BỘ CODE NÀY VÀO FILE: pagination.component.html -->
+
+<nav *ngIf="totalPages > 1" class="pagination-nav">
+    <!-- Sử dụng biến paginationInfo -->
+    <p class="pagination-info">{{ paginationInfo }}</p>
+
+    <ul class="pagination-list">
+        <!-- Nút Lùi -->
+        <li class="page-item">
+            <!-- Sử dụng hàm changePage() -->
+            <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="page-link icon-link">
+                <span class="material-symbols-outlined">
+                    < </span>
+            </button>
+        </li>
+
+        <!-- Các nút số trang -->
+        <ng-container *ngFor="let page of pages">
+            <!-- Nút số trang bình thường -->
+            <li *ngIf="page !== -1" class="page-item" [class.active]="page === currentPage">
+                <!-- Sử dụng hàm changePage() -->
+                <button (click)="changePage(page)" class="page-link">
+                    {{ page }}
+                </button>
+            </li>
+            <!-- Dấu ... -->
+            <li *ngIf="page === -1" class="page-item disabled">
+                <span class="page-ellipsis">...</span>
+            </li>
+        </ng-container>
+
+        <!-- Nút Tiến -->
+        <li class="page-item">
+            <!-- Sử dụng hàm changePage() -->
+            <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages"
+                class="page-link icon-link">
+                <span class="material-symbols-outlined">
+                    >
+                </span>
+            </button>
+        </li>
+    </ul>
+</nav>

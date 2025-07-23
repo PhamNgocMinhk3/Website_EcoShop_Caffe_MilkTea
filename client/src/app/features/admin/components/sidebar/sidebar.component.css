@@ -1,0 +1,110 @@
+/* Biến màu để dễ dàng thay đổi và nhất quán */
+:host {
+  --sidebar-bg: #1a1a1a;
+  --sidebar-text: #e0e0e0;
+  --sidebar-text-hover: #ffffff;
+  --sidebar-border: #333;
+  --item-hover-bg: #2a2a2a;
+  --item-active-bg: #8e6a47;
+  --item-active-text: #ffffff;
+}
+
+.sidebar {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1rem;
+  transition: width 0.3s ease-in-out;
+  width: 260px; /* Chiều rộng mặc định */
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--sidebar-border);
+  flex-shrink: 0;
+}
+
+.logo-icon {
+  font-size: 1.75rem;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--sidebar-text-hover);
+  white-space: nowrap; /* Ngăn chữ xuống dòng */
+}
+
+.sidebar-nav {
+  flex-grow: 1;
+  overflow-y: auto; /* Cho phép cuộn nếu có nhiều mục */
+  overflow-x: hidden;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--sidebar-text);
+  transition: background-color 0.2s, color 0.2s;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nav-item:hover {
+  background-color: var(--item-hover-bg);
+  color: var(--sidebar-text-hover);
+}
+
+.nav-item.active {
+  background-color: var(--item-active-bg);
+  color: var(--item-active-text);
+  font-weight: 500;
+}
+
+.nav-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0; /* Ngăn icon bị co lại */
+}
+
+.sidebar-footer {
+  margin-top: auto; /* Đẩy footer xuống dưới */
+  flex-shrink: 0;
+}
+
+.logout-btn {
+  width: 100%;
+  background: none;
+  border: none;
+}
+
+/* Logic thu gọn sidebar */
+.sidebar.collapsed {
+  width: 80px; /* Chiều rộng khi thu gọn */
+}
+
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .nav-text {
+  opacity: 0;
+  visibility: hidden;
+  width: 0;
+  transition: opacity 0.1s ease, width 0s ease 0.1s, visibility 0s ease 0.1s;
+}
+
+.logo-text,
+.nav-text {
+  transition: opacity 0.2s ease 0.1s;
+}

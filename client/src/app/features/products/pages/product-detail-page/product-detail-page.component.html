@@ -1,0 +1,61 @@
+<app-header></app-header>
+<main class="product-detail-wrapper" *ngIf="product">
+    <div class="product-grid">
+        <div class="product-image-container">
+            <img [src]="product.imageUrl" [alt]="product.name"
+                onerror="this.src='https://placehold.co/800x1000/eee/ccc?text=Image+Error'">
+        </div>
+        <div class="product-details-container">
+            <h1 class="product-name">{{ product.name }}</h1>
+            <p class="product-description">{{ product.description }}</p>
+
+            <!-- Size Options -->
+            <div class="option-group">
+                <h3 class="option-title">Chọn size</h3>
+                <div class="size-options">
+                    <label class="size-label" [class.selected]="selectedSize === 'S'">
+                        <input type="radio" name="size" value="S" [(ngModel)]="selectedSize"
+                            (change)="onOptionChange()"> S
+                    </label>
+                    <label class="size-label" [class.selected]="selectedSize === 'M'">
+                        <input type="radio" name="size" value="M" [(ngModel)]="selectedSize"
+                            (change)="onOptionChange()"> M (+3.000đ)
+                    </label>
+                    <label class="size-label" [class.selected]="selectedSize === 'L'">
+                        <input type="radio" name="size" value="L" [(ngModel)]="selectedSize"
+                            (change)="onOptionChange()"> L (+7.000đ)
+                    </label>
+                </div>
+            </div>
+
+            <!-- Topping Options -->
+            <div class="option-group">
+                <h3 class="option-title">Chọn topping (tùy chọn)</h3>
+                <div class="topping-table">
+                    <div class="topping-row" *ngFor="let topping of toppings">
+                        <label class="topping-label">
+                            <input type="checkbox" [(ngModel)]="selectedToppings[topping.id]"
+                                (change)="onOptionChange()">
+                            {{ topping.name }}
+                        </label>
+                        <span class="topping-price">+{{ topping.price | number }}đ</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quantity & Add to Cart -->
+            <div class="actions-group">
+                <div class="quantity-selector">
+                    <button (click)="decreaseQuantity()">-</button>
+                    <span>{{ quantity }}</span>
+                    <button (click)="increaseQuantity()">+</button>
+                </div>
+                <button class="add-to-cart-btn" (click)="addToCart()">
+                    Thêm vào giỏ - {{ totalPrice | number }}đ
+                </button>
+            </div>
+
+        </div>
+    </div>
+</main>
+<app-footer></app-footer>

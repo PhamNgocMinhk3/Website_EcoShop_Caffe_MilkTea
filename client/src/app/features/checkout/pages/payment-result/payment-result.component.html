@@ -1,0 +1,17 @@
+<div class="result-container">
+    <div class="result-card" #resultCard [class.success]="isSuccess" [class.error]="!isSuccess">
+        <div *ngIf="isLoading" class="spinner"></div>
+
+        <div *ngIf="!isLoading">
+            <div class="icon" [class.success]="isSuccess" [class.error]="!isSuccess">
+                <span *ngIf="isSuccess">✔</span>
+                <span *ngIf="!isSuccess">✖</span>
+            </div>
+            <h2>
+                {{ isSuccess ? 'Thanh toán thành công' : 'Thanh toán thất bại' }}
+            </h2>
+            <p class="message">{{ message }}</p>
+            <a routerLink="/home" class="home-button">Về trang chủ</a>
+        </div>
+    </div>
+</div>

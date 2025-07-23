@@ -1,0 +1,87 @@
+<div class="form-container">
+    <h3 class="form-title">
+        {{ isEditMode ? 'Sửa thông tin' : 'Thêm thông tin cho' }}
+        <span class="form-title-highlight">{{ employeeVm?.email }}</span>
+    </h3>
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form-body" novalidate>
+        <div class="form-grid">
+            <!-- Họ Tên -->
+            <div class="form-group">
+                <label for="hoTen">Họ Tên</label>
+                <input id="hoTen" type="text" formControlName="hoTen" class="form-control"
+                    [class.is-invalid]="employeeForm.get('hoTen')?.invalid && employeeForm.get('hoTen')?.touched">
+                <div *ngIf="employeeForm.get('hoTen')?.invalid && employeeForm.get('hoTen')?.touched"
+                    class="error-message">
+                    Vui lòng nhập họ tên.
+                </div>
+            </div>
+            <!-- Ngày Sinh -->
+            <div class="form-group">
+                <label for="ngaySinh">Ngày Sinh</label>
+                <input id="ngaySinh" type="date" formControlName="ngaySinh" class="form-control"
+                    [class.is-invalid]="employeeForm.get('ngaySinh')?.invalid && employeeForm.get('ngaySinh')?.touched">
+                <div *ngIf="employeeForm.get('ngaySinh')?.invalid && employeeForm.get('ngaySinh')?.touched"
+                    class="error-message">
+                    Vui lòng chọn ngày sinh.
+                </div>
+            </div>
+            <!-- Giới Tính -->
+            <div class="form-group">
+                <label for="gioiTinh">Giới Tính</label>
+                <select id="gioiTinh" formControlName="gioiTinh" class="form-control">
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                    <option value="Khác">Khác</option>
+                </select>
+            </div>
+            <!-- Số Điện Thoại -->
+            <div class="form-group">
+                <label for="soDienThoai">Số Điện Thoại</label>
+                <input id="soDienThoai" type="tel" formControlName="soDienThoai" class="form-control"
+                    [class.is-invalid]="employeeForm.get('soDienThoai')?.invalid && employeeForm.get('soDienThoai')?.touched">
+                <div *ngIf="employeeForm.get('soDienThoai')?.invalid && employeeForm.get('soDienThoai')?.touched"
+                    class="error-message">
+                    <span *ngIf="employeeForm.get('soDienThoai')?.hasError('required')">Vui lòng nhập số điện
+                        thoại.</span>
+                    <span *ngIf="employeeForm.get('soDienThoai')?.hasError('pattern')">Số điện thoại không hợp
+                        lệ.</span>
+                </div>
+            </div>
+            <!-- CCCD -->
+            <div class="form-group">
+                <label for="cccd">CCCD</label>
+                <input id="cccd" type="text" formControlName="cccd" class="form-control"
+                    [class.is-invalid]="employeeForm.get('cccd')?.invalid && employeeForm.get('cccd')?.touched">
+                <div *ngIf="employeeForm.get('cccd')?.invalid && employeeForm.get('cccd')?.touched"
+                    class="error-message">
+                    <span *ngIf="employeeForm.get('cccd')?.hasError('required')">Vui lòng nhập CCCD.</span>
+                    <span *ngIf="employeeForm.get('cccd')?.hasError('pattern')">CCCD không hợp lệ (9 hoặc 12 số).</span>
+                </div>
+            </div>
+            <!-- Loại Nhân Viên -->
+            <div class="form-group">
+                <label for="loaiNhanVien">Loại Nhân Viên</label>
+                <select id="loaiNhanVien" formControlName="loaiNhanVien" class="form-control">
+                    <option [ngValue]="0">Bán thời gian</option>
+                    <option [ngValue]="1">Toàn thời gian</option>
+                </select>
+            </div>
+            <!-- Địa Chỉ -->
+            <div class="form-group full-width">
+                <label for="diaChi">Địa Chỉ</label>
+                <input id="diaChi" type="text" formControlName="diaChi" class="form-control"
+                    [class.is-invalid]="employeeForm.get('diaChi')?.invalid && employeeForm.get('diaChi')?.touched">
+                <div *ngIf="employeeForm.get('diaChi')?.invalid && employeeForm.get('diaChi')?.touched"
+                    class="error-message">
+                    Vui lòng nhập địa chỉ.
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="button" (click)="cancel()" class="btn btn-secondary">Hủy</button>
+            <!-- SỬA LỖI: Cập nhật điều kiện [disabled] -->
+            <button type="submit" [disabled]="employeeForm.invalid || (isEditMode && !employeeForm.dirty)"
+                class="btn btn-primary">Lưu</button>
+        </div>
+    </form>
+</div>

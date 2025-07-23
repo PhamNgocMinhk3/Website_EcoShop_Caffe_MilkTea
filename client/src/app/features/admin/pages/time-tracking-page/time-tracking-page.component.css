@@ -1,0 +1,188 @@
+/* Import Google Fonts và Icons */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+  background: linear-gradient(145deg, #eef2f3, #dce3e4);
+  border-radius: 20px;
+  box-shadow: 20px 20px 60px #bec5c6, -20px -20px 60px #ffffff;
+  visibility: hidden; /* Dùng cho animation */
+}
+
+.card {
+  width: 100%;
+  padding: 2rem;
+  background: #e6eaeb;
+  border-radius: 15px;
+  box-shadow: inset 5px 5px 10px #d1d5d6, inset -5px -5px 10px #fbffff;
+  text-align: center;
+  position: relative;
+}
+
+/* Clock styles */
+.clock-card {
+  padding-bottom: 1rem;
+}
+
+.clock-svg {
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.clock-face {
+  stroke: #b0b8ba;
+  stroke-width: 4;
+  fill: #e6eaeb;
+}
+
+.hour-tick {
+  stroke: #99a2a4;
+  stroke-width: 2;
+}
+
+.hand {
+  stroke-linecap: round;
+}
+
+.hour-hand {
+  stroke: #333;
+  stroke-width: 6;
+}
+
+.minute-hand {
+  stroke: #555;
+  stroke-width: 4;
+}
+
+.second-hand {
+  stroke: #e74c3c;
+  stroke-width: 2;
+}
+
+.center-pin {
+  fill: #333;
+}
+
+.digital-clock {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #34495e;
+  margin-top: 1rem;
+}
+
+.date-display {
+  font-size: 1rem;
+  color: #7f8c8d;
+}
+
+/* Status card styles */
+.welcome-message {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #2c3e50;
+  margin: 0 0 1rem 0;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.status-badge.chưa-chấm-công {
+  background-color: #f39c12;
+}
+.status-badge.đã-vào-ca {
+  background-color: #2ecc71;
+}
+.status-badge.đã-kết-thúc-ca {
+  background-color: #95a5a6;
+}
+
+.shift-time,
+.notification {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 5px 5px 15px #c1c6c7, -5px -5px 15px #ffffff;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 8px 8px 20px #c1c6c7, -8px -8px 20px #ffffff;
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 3px 3px 10px #c1c6c7, -3px -3px 10px #ffffff;
+}
+
+.btn:disabled {
+  background-color: #bdc3c7 !important;
+  cursor: not-allowed;
+  box-shadow: inset 2px 2px 5px #a7acae, inset -2px -2px 5px #d3d9db;
+  color: #7f8c8d;
+}
+
+.check-in-btn {
+  background-color: #3498db;
+}
+.check-out-btn {
+  background-color: #e74c3c;
+}
+
+/* Utility classes */
+.loader,
+.error-message {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+}
+.error-message {
+  color: #c0392b;
+}

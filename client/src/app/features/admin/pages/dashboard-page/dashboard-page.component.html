@@ -1,0 +1,71 @@
+<!-- dashboard-page.component.html -->
+<div class="dashboard-container">
+    <header class="main-header-dash">
+        <h2>Chào mừng trở lại, {{ userName }}!</h2>
+        <p>Đây là tổng quan nhanh về tình hình kinh doanh của bạn.</p>
+    </header>
+
+    <!-- Hiển thị trạng thái tải -->
+    <div *ngIf="isLoading" class="loading-state">
+        <div class="spinner"></div>
+        <p>Đang tải dữ liệu...</p>
+    </div>
+
+    <!-- Hiển thị nội dung chính khi có dữ liệu -->
+    <div *ngIf="!isLoading && overviewStats" class="dashboard-content">
+        <!-- Lưới chứa 4 thẻ thống kê -->
+        <div class="stats-grid">
+            <!-- Thẻ Tổng Doanh Thu -->
+            <div class="stat-card revenue">
+                <div class="card-icon">
+                    <span class="material-symbols-outlined">payments</span>
+                </div>
+                <div class="card-content">
+                    <h4>Tổng Doanh Thu</h4>
+                    <p class="stat-value">{{ overviewStats.totalRevenue | currency:'VND':'symbol':'1.0-0' }}</p>
+                </div>
+            </div>
+
+            <!-- Thẻ Tổng Số Đơn Hàng -->
+            <div class="stat-card orders">
+                <div class="card-icon">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                </div>
+                <div class="card-content">
+                    <h4>Tổng Số Đơn Hàng</h4>
+                    <p class="stat-value">{{ overviewStats.totalOrders | number }}</p>
+                </div>
+            </div>
+
+            <!-- Thẻ Giá Trị Đơn Hàng Trung Bình -->
+            <div class="stat-card avg-order">
+                <div class="card-icon">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                </div>
+                <div class="card-content">
+                    <h4>Giá Trị Đơn TB</h4>
+                    <p class="stat-value">{{ overviewStats.averageOrderValue | currency:'VND':'symbol':'1.0-0' }}</p>
+                </div>
+            </div>
+
+            <!-- Thẻ Tổng Lợi Nhuận Gộp -->
+            <div class="stat-card profit" [class.negative]="overviewStats.totalGrossProfit < 0">
+                <div class="card-icon">
+                    <span class="material-symbols-outlined">trending_up</span>
+                </div>
+                <div class="card-content">
+                    <h4>Tổng Lợi Nhuận Gộp</h4>
+                    <p class="stat-value">{{ overviewStats.totalGrossProfit | currency:'VND':'symbol':'1.0-0' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Biểu đồ Doanh thu và Lợi nhuận -->
+        <div class="chart-container">
+            <h3>Biểu đồ Doanh thu & Lợi nhuận</h3>
+            <div class="chart-wrapper">
+                <canvas #revenueChart></canvas>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="warehouse-management-container">
+
+    <header class="page-header">
+        <div>
+            <h1 class="page-title">Quản Lý Kho</h1>
+            <p class="page-subtitle">Theo dõi và quản lý tồn kho nguyên vật liệu.</p>
+        </div>
+        <div class="header-actions">
+            <button (click)="openImportModal()" class="btn btn-secondary">
+                <span class="material-symbols-outlined">upload File</span>
+            </button>
+            <button (click)="exportData()" class="btn btn-secondary">
+                <span class="material-symbols-outlined">download File</span>
+            </button>
+            <button (click)="openAddModal()" class="btn btn-primary">
+                Thêm Nguyên Liệu
+            </button>
+        </div>
+    </header>
+
+    <main class="table-container">
+        <table class="warehouse-table" *ngIf="!isLoading">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Nguyên Liệu</th>
+                    <th>Tồn Kho</th>
+                    <th>Đã Dùng</th>
+                    <th>Đơn Vị</th>
+                    <th>Giá Vốn</th>
+                    <th>Trạng Thái</th>
+                    <th class="actions-column">Hành Động</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="pagedIngredients.length > 0">
+                <tr *ngFor="let item of pagedIngredients">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.quantityInStock | number }}</td>
+                    <td>{{ item.totalUsed | number }}</td>
+                    <td>{{ item.unit }}</td>
+                    <td>{{ item.costPrice | number }} đ</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="getStatusClass(item.status)">{{ item.status }}</span>
+                    </td>
+                    <td class="actions-cell">
+                        <button (click)="openEditModal(item)" class="btn btn-icon-only" title="Sửa nguyên liệu">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="pagedIngredients.length === 0 && !isLoading">
+                <tr class="empty-row">
+                    <td colspan="8">Chưa có dữ liệu tồn kho.</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer *ngIf="!isLoading && totalPages > 1" class="pagination-footer">
+        <app-pagination [currentPage]="currentPage" [totalPages]="totalPages" [totalCount]="totalCount"
+            [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+        </app-pagination>
+    </footer>
+
+    <div *ngIf="isLoading" class="loading-state">
+        <div class="loader"></div>
+        <p>Đang tải dữ liệu kho...</p>
+    </div>
+</div>
+
+<app-modal [isOpen]="isFormModalOpen" (close)="isFormModalOpen = false">
+    <app-ingredient-form [ingredientToEdit]="ingredientToEdit" (formSaved)="handleFormSave($event)"
+        (formCanceled)="isFormModalOpen = false">
+    </app-ingredient-form>
+</app-modal>
+
+<app-modal [isOpen]="isImportModalOpen" (close)="isImportModalOpen = false">
+    <app-ingredient-import (importSuccess)="handleImportSuccess()" (importCanceled)="isImportModalOpen = false">
+    </app-ingredient-import>
+</app-modal>

@@ -1,0 +1,115 @@
+<header class="main-header-dash">
+    <h2>Quản lý Đơn hàng</h2>
+    <p>Xem, duyệt và cập nhật trạng thái các đơn hàng.</p>
+</header>
+
+<div class="table-container">
+    <table class="order-table">
+        <thead>
+            <tr>
+                <th class="order-id-col">ID</th>
+                <th>Người duyệt / Bàn</th>
+                <th>Thời gian đặt</th>
+                <th>Tổng tiền</th>
+                <th class="col-status">Trạng thái ĐH</th>
+                <th class="col-checkin">Check-in</th>
+                <th class="col-action">Hành động</th>
+                <th class="col-action">Chi tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="isLoading">
+                <td [attr.colspan]="8" class="loading-cell">
+                    <div class="loader"></div>
+                </td>
+            </tr>
+            <tr *ngIf="!isLoading && orders.length === 0">
+                <td [attr.colspan]="8" class="no-orders-cell">
+                    <p>Chưa có đơn hàng nào.</p>
+                </td>
+            </tr>
+
+            <ng-container *ngFor="let order of paginatedOrders">
+                <tr class="order-row" [class.details-row-parent]="expandedOrderId === order.id"
+                    [ngClass]="getOrderStatusClass(order.status)">
+
+                    <td>#{{ order.id }}</td>
+
+                    <td>
+                        <div>{{ order.approvedBy }}</div>
+                        <small class="text-muted">Bàn: {{ order.tableName }}</small>
+                    </td>
+
+                    <td>{{ order.bookingTime | date:'dd/MM/yyyy HH:mm' }}</td>
+
+                    <td>{{ order.finalAmount | number }}đ</td>
+
+                    <td>
+                        <span class="status-badge" [ngClass]="getOrderStatusClass(order.status)">
+                            {{ getStatusText(order.status) }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <button class="check-in-btn" [class.checked-in]="order.checkIn"
+                            (click)="updateCheckInStatus(order)">
+                            {{ order.checkIn ? 'Đã đến' : 'Chưa đến' }}
+                        </button>
+                    </td>
+
+                    <td>
+                        <select (change)="updateStatus(order, $event)" [value]="order.status" class="status-select">
+                            <option [value]="OrderStatus.Pending">Chờ xác nhận</option>
+                            <option [value]="OrderStatus.Confirmed">Đã xác nhận</option>
+                            <option [value]="OrderStatus.Completed">Hoàn thành</option>
+                            <option [value]="OrderStatus.Cancelled">Đã hủy</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <button (click)="toggleDetails(order.id, $event)" class="details-btn">
+                            {{ expandedOrderId === order.id ? 'Ẩn' : 'Chi tiết' }}
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="details-row" *ngIf="expandedOrderId === order.id">
+                    <td [attr.colspan]="8">
+                        <div class="details-wrapper">
+                            <div class="order-details-container">
+                                <div class="detail-section">
+                                    <h4>Thông tin thanh toán</h4>
+                                    <div class="detail-info">
+                                        <strong>Mã giảm giá:</strong> <span>{{ order.voucherCode || 'Không áp dụng'
+                                            }}</span>
+                                        <strong>Thanh toán:</strong> <span>{{ order.paymentMethod }}</span>
+                                        <strong>Tổng tiền gốc:</strong> <span>{{ order.totalAmount | number }}đ</span>
+                                        <strong>Ngày tạo:</strong> <span>{{ order.createdAt | date:'dd/MM/yyyy HH:mm'
+                                            }}</span>
+                                    </div>
+                                </div>
+                                <div class="detail-section">
+                                    <h4>Sản phẩm đã đặt</h4>
+                                    <ul class="order-item-list">
+                                        <li *ngFor="let item of order.items" class="order-item">
+                                            {{ item.quantity }} x <strong>{{ item.productName }}</strong> ({{
+                                            item.unitPrice | number }}đ)
+                                            <div *ngIf="item.toppings && item.toppings.length > 0"
+                                                class="item-toppings">
+                                                Toppings: {{ item.toppings.join(', ') }}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </ng-container>
+
+        </tbody>
+    </table>
+    <app-pagination *ngIf="!isLoading && orders.length > 0" [currentPage]="currentPage" [totalPages]="totalPages"
+        [totalCount]="orders.length" [pageSize]="itemsPerPage" (pageChange)="onPageChange($event)">
+    </app-pagination>
+</div>

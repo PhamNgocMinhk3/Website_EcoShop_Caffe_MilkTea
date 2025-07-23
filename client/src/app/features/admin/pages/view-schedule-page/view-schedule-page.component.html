@@ -1,0 +1,70 @@
+<!-- Container chính của trang -->
+<div class="page-container">
+    <!-- Bảng lịch làm việc -->
+    <main class="calendar-panel">
+        <!-- Header của bảng lịch, chứa điều hướng tuần và tiêu đề -->
+        <header class="calendar-header">
+            <button class="nav-btn" (click)="previousWeek()">
+                <span class="material-symbols-outlined">
+                    👈
+                </span>
+            </button>
+            <h2 class="week-title">
+                Tuần: {{ weekStartDate | date : 'dd/MM' }} -
+                {{ weekDates[6] | date : 'dd/MM/yyyy' }}
+            </h2>
+            <button class="nav-btn" (click)="nextWeek()">
+                <span class="material-symbols-outlined"> 👉
+                </span>
+            </button>
+        </header>
+
+        <!-- Container cho phép cuộn bảng -->
+        <div class="table-scroll-container">
+            <!-- Hiển thị loading spinner khi đang tải dữ liệu -->
+            <div *ngIf="isLoading" class="loading-overlay">
+                <div class="spinner"></div>
+            </div>
+
+            <!-- Bảng lịch làm việc -->
+            <table class="schedule-table" *ngIf="!isLoading">
+                <thead>
+                    <tr>
+                        <th class="shift-header-cell">Ca</th>
+                        <!-- Hiển thị các ngày trong tuần -->
+                        <th *ngFor="let day of weekDates" class="day-header-cell">
+                            {{ day | date : 'EEEE' : 'vi' }} <br />
+                            <span class="day-date">{{ day | date : 'dd/MM' }}</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Lặp qua các ca làm việc (Sáng, Chiều, Tối) -->
+                    <ng-container *ngFor="let shift of shifts">
+                        <!-- Lặp qua các ô trong mỗi ca -->
+                        <tr *ngFor="let slot of shift.slots; let i = index">
+                            <!-- Hiển thị tên ca ở ô đầu tiên -->
+                            <td *ngIf="i === 0" class="shift-cell" [rowSpan]="shift.slots.length">
+                                <div>
+                                    <span>{{ shift.name }}</span>
+                                </div>
+                            </td>
+
+                            <!-- Các ô hiển thị phân công -->
+                            <td *ngFor="let day of weekDates" class="schedule-cell">
+                                <div class="assignment-wrapper">
+                                    <!-- Kiểm tra và hiển thị thông tin nhân viên được phân công -->
+                                    <div *ngIf="schedule[format(day, 'yyyy-MM-dd')]?.[slot] as assignment"
+                                        class="assignment-chip">
+                                        <span>{{ assignment.hoTen }}</span>
+                                        <!-- Không có nút xóa ở đây -->
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>

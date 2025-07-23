@@ -1,0 +1,202 @@
+/* General Layout & Header */
+.main-header-dash {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.main-header-dash h2 {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+}
+
+.main-header-dash p {
+  font-size: 0.95em;
+  color: #666;
+  margin: 0;
+}
+
+/* Table Container & Loading State */
+.table-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.loading-cell,
+.no-orders-cell {
+  text-align: center;
+  padding: 40px;
+  color: #777;
+}
+
+/* Main Order Table Styling */
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.order-table th,
+.order-table td {
+  padding: 12px 15px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.order-table thead th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+  border-top: 1px solid #e0e0e0;
+  border-bottom-width: 2px;
+}
+
+.order-table tbody tr:hover {
+  background-color: #f5f8ff;
+}
+
+/* Column Specific Styles */
+.text-muted {
+  font-size: 0.9em;
+  color: #6c757d;
+}
+
+.order-id-col {
+  width: 8%;
+}
+.col-status {
+  width: 15%;
+}
+.col-checkin,
+.col-action {
+  width: 12%;
+}
+
+/* Status Badge */
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.85em;
+  font-weight: 500;
+  color: #fff;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background-color: #ffc107;
+}
+.status-confirmed {
+  background-color: #17a2b8;
+}
+.status-completed {
+  background-color: #28a745;
+}
+.status-cancelled {
+  background-color: #dc3545;
+}
+
+/* Action Buttons & Select */
+.check-in-btn,
+.details-btn,
+.status-select {
+  padding: 6px 12px;
+  font-size: 0.9em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #ccc;
+}
+
+.status-select {
+  min-width: 120px;
+}
+
+.check-in-btn {
+  background-color: #f8f9fa;
+  color: #333;
+}
+.check-in-btn:hover {
+  background-color: #e2e6ea;
+}
+
+.check-in-btn.checked-in {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+.check-in-btn.checked-in:hover {
+  background-color: #218838;
+}
+
+.details-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}
+.details-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Expanded Details Row */
+.details-row td {
+  padding: 0;
+  border-top: none;
+}
+
+.details-wrapper {
+  background-color: #fafafa;
+  overflow: hidden;
+}
+
+.order-details-container {
+  display: flex;
+  gap: 30px;
+  padding: 20px;
+}
+
+.detail-section {
+  flex: 1;
+}
+
+.detail-section h4 {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.detail-info {
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+.detail-info strong {
+  color: #333;
+}
+.detail-info span {
+  color: #555;
+}
+
+.order-item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.order-item {
+  padding: 6px 0;
+  border-bottom: 1px dotted #ccc;
+}
+.order-item:last-child {
+  border-bottom: none;
+}
+.item-toppings {
+  font-size: 0.9em;
+  color: #666;
+  padding-left: 15px;
+}

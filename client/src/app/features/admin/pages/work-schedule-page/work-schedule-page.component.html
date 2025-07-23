@@ -1,0 +1,74 @@
+<div class="page-container" cdkDropListGroup>
+    <aside class="employee-panel">
+        <h3 class="panel-title">Danh sách nhân viên</h3>
+        <div id="employee-drag-list" cdkDropList [cdkDropListData]="employees" class="employee-list">
+            <div class="employee-item" *ngFor="let emp of employees" cdkDrag [cdkDragData]="emp">
+                <div class="employee-content">
+                    <div class="employee-info">
+                        <span class="employee-name">{{ emp.hoTen }}</span>
+                        <span class="employee-email">{{ emp.email }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="calendar-panel">
+        <header class="calendar-header">
+            <button class="nav-btn" (click)="previousWeek()">
+                <span class="material-symbols-outlined">
+                    👈
+                </span>
+            </button>
+            <h2 class="week-title">
+                Tuần: {{ weekStartDate | date:'dd/MM' }} - {{ weekDates[6] | date:'dd/MM/yyyy' }}
+            </h2>
+            <button class="nav-btn" (click)="nextWeek()">
+                <span class="material-symbols-outlined">
+                    👉
+                </span>
+            </button>
+        </header>
+
+        <div class="table-scroll-container">
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th class="shift-header-cell">Ca</th>
+                        <th *ngFor="let day of weekDates" class="day-header-cell">
+                            {{ day | date:'EEEE' }} <br> <span class="day-date">{{ day | date:'dd/MM' }}</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let shift of shifts">
+                        <tr *ngFor="let slot of shift.slots; let i = index">
+                            <td *ngIf="i === 0" class="shift-cell" [rowSpan]="shift.slots.length">
+                                <div><span>{{ shift.name }}</span></div>
+                            </td>
+
+                            <td *ngFor="let day of weekDates" class="schedule-cell" cdkDropList
+                                (cdkDropListDropped)="onDrop($event, day)">
+
+                                <div class="assignment-wrapper">
+                                    <div *ngIf="schedule[format(day, 'yyyy-MM-dd')]?.[slot] as assignment"
+                                        class="assignment-chip">
+                                        <span>{{ assignment.hoTen }}</span>
+                                        <button class="remove-chip-btn"
+                                            (click)="removeAssignment(assignment)">&times;</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<app-modal [isOpen]="isModalOpen" (close)="isModalOpen = false">
+    <app-shift-assignment-modal [employee]="employeeToAssign" [day]="dayToAssign" (save)="handleAssignmentSave($event)"
+        (cancel)="isModalOpen = false">
+    </app-shift-assignment-modal>
+</app-modal>

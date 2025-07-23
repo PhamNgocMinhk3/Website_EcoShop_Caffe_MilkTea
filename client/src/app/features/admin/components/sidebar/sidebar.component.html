@@ -1,0 +1,70 @@
+<aside class="sidebar" [class.collapsed]="isCollapsed">
+    <div class="sidebar-header">
+        <span class="logo-icon">✨</span>
+        <h3 class="logo-text">The Alley Admin</h3>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a routerLink="dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Tổng quan</span>
+        </a>
+
+        <a routerLink="orders" routerLinkActive="active" class="nav-item">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Quản Lý Đơn hàng</span>
+        </a>
+
+        <a *ngIf="userRole === 'Quản Lý'" routerLink="products" routerLinkActive="active" class="nav-item">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Quản Lý Sản phẩm</span>
+        </a>
+
+        <a routerLink="tables" routerLinkActive="active" class="nav-item">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Quản Lý Bàn</span>
+        </a>
+
+        <a *ngIf="userRole === 'Quản Lý'" routerLink="employees" routerLinkActive="active" class="nav-item">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Quản Lý Nhân sự</span>
+        </a>
+
+        <a *ngIf="userRole === 'Quản Lý'" routerLink="schedule" linkActive="active" class="nav-item">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Phân Công</span>
+        </a>
+
+        <a routerLink="schedule_work" routerLinkActive="active" class="nav-item">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Lịch Làm Việc</span>
+        </a>
+
+        <a routerLink="time-tracking" routerLinkActive="active" class="nav-item">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Chấm Công</span>
+        </a>
+
+        <a *ngIf="userRole === 'Quản Lý'" routerLink="warehouse" routerLinkActive="active" class="nav-item">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Quản Lý Kho</span>
+        </a>
+
+        <a *ngIf="userRole === 'Quản Lý'" routerLink="salary" routerLinkActive="active" class="nav-item">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Quản Lý Lương</span>
+        </a>
+
+        <a *ngIf="userRole === 'Quản Lý'" routerLink="statistics" routerLinkActive="active" class="nav-item">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Thống Kê</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <button class="nav-item logout-btn" (click)="logout()">
+            <span class="nav-icon material-symbols-outlined"></span>
+            <span class="nav-text">Đăng xuất</span>
+        </button>
+    </div>
+</aside>

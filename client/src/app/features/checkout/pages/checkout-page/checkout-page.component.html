@@ -1,0 +1,108 @@
+<app-header></app-header>
+<main class="checkout-container">
+    <div class="checkout-layout">
+        <div class="info-card">
+            <section class="info-section animate-item">
+                <h2>Thông tin đặt bàn</h2>
+                <div class="booking-fields">
+                    <div class="field-group">
+                        <label for="guests">Số người</label>
+                        <input type="number" id="guests" [(ngModel)]="bookingDetails.numberOfGuests" min="1">
+                    </div>
+                    <div class="field-group">
+                        <label for="date">Ngày đặt</label>
+                        <input type="date" id="date" [(ngModel)]="bookingDetails.date" (change)="onDateTimeChange()">
+                    </div>
+                    <div class="field-group">
+                        <label for="time">Giờ đặt</label>
+                        <input type="time" id="time" [(ngModel)]="bookingDetails.time" (change)="onDateTimeChange()">
+                    </div>
+                </div>
+                <p *ngIf="availabilityMessage" class="availability-message" [class.unavailable]="isTimeSlotTaken"
+                    [class.available]="!isTimeSlotTaken">
+                    {{ availabilityMessage }}
+                </p>
+            </section>
+
+            <section class="info-section animate-item">
+                <h2>Phương thức thanh toán</h2>
+                <div class="payment-methods">
+                    <div class="payment-option" [class.selected]="bookingDetails.paymentMethod === PaymentMethod.Cash"
+                        (click)="selectPayment(PaymentMethod.Cash)">
+                        <span class="payment-title">Tiền mặt</span>
+                    </div>
+                    <div class="payment-option" [class.selected]="bookingDetails.paymentMethod === PaymentMethod.Card"
+                        (click)="selectPayment(PaymentMethod.Card)">
+                        <span class="payment-title">ATM / VietQR</span>
+                        <div class="qr-info" *ngIf="bookingDetails.paymentMethod === PaymentMethod.Card">
+                            <p>Quét mã để thanh toán <strong>{{ total | currency:'VND':'symbol':'1.0-0' }}</strong></p>
+                            <img [src]="vietQRUrl" alt="VietQR Code" *ngIf="vietQRUrl">
+                            <div *ngIf="!vietQRUrl" class="qr-loader"></div>
+                            <small>Ngân hàng: BIDV - 6504398529 - Phạm Ngọc Minh</small>
+                        </div>
+                    </div>
+
+                    <div class="payment-option" [class.selected]="bookingDetails.paymentMethod === PaymentMethod.VNPAY"
+                        (click)="selectPayment(PaymentMethod.VNPAY)">
+                        <span class="payment-title">Cổng thanh toán VNPAY</span>
+                    </div>
+                    <div class="payment-option" (click)="selectPayment(PaymentMethod.Metamask)">
+                        <span class="payment-title">Ví Metamask</span>
+                        <small class="payment-subtitle">(Đang phát triển)</small>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="summary-card animate-item">
+            <h2>Tóm tắt đơn hàng</h2>
+            <div class="cart-items-summary">
+                <div *ngFor="let item of cartItems" class="summary-item">
+                    <span class="item-quantity">{{ item.quantity }}x</span>
+                    <div class="item-details">
+                        <span class="item-name">{{ item.name }} ({{item.size}})</span>
+                        <small class="item-toppings">{{ getToppingNames(item.selectedToppings) }}</small>
+                    </div>
+                    <button class="edit-btn" (click)="editItem(item)">Sửa</button>
+                    <span class="item-price">{{ (item.finalPrice * item.quantity) | currency:'VND':'symbol':'1.0-0'
+                        }}</span>
+                </div>
+            </div>
+            <div class="cost-summary">
+                <div class="cost-line"><span>Tạm tính</span><span>{{ subTotal | currency:'VND':'symbol':'1.0-0'
+                        }}</span></div>
+                <div class="cost-line voucher-line">
+                    <span>Mã giảm giá</span>
+                    <input type="text" placeholder="Nhập mã..." [(ngModel)]="voucherCode"
+                        (input)="onVoucherInput($event)">
+                </div>
+                <div *ngIf="appliedVoucher" class="cost-line discount">
+                    <span>Đã giảm ({{ appliedVoucher.code }})</span>
+                    <span>- {{ appliedVoucher.discountAmount | currency:'VND':'symbol':'1.0-0' }}</span>
+                </div>
+                <div class="cost-line total">
+                    <span>Tổng cộng</span>
+                    <span>{{ total | currency:'VND':'symbol':'1.0-0' }}</span>
+                </div>
+            </div>
+            <button class="place-order-btn" (click)="placeOrder()" [disabled]="isPlacingOrder || isTimeSlotTaken">
+                {{ isPlacingOrder ? 'Đang xử lý...' : 'Hoàn tất đặt hàng' }}
+            </button>
+        </div>
+    </div>
+</main>
+<app-footer></app-footer>
+
+<div class="topping-modal-overlay" *ngIf="editingItem" (click)="closeToppingModal()"></div>
+<div class="topping-modal" *ngIf="editingItem">
+    <h3>Tùy chỉnh Topping cho:</h3>
+    <p>{{ editingItem.name }} ({{editingItem.size}})</p>
+    <div class="topping-list">
+        <label *ngFor="let topping of allToppings" class="topping-option"
+            [class.selected]="tempSelectedToppings[topping.id]">
+            <input type="checkbox" [(ngModel)]="tempSelectedToppings[topping.id]">
+            {{ topping.name }} (+{{ topping.price | currency:'VND':'symbol':'1.0-0' }})
+        </label>
+    </div>
+    <button class="confirm-topping-btn" (click)="confirmToppingChanges()">Xác nhận thay đổi</button>
+</div>

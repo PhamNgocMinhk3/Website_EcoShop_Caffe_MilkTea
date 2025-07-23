@@ -1,0 +1,117 @@
+/* Kế thừa các biến màu và style nút cơ bản */
+@import "../product-management-page/product-management-page.component.css";
+
+/* Cải thiện style cho các nút ở header */
+.header-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.header-actions .btn {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+.header-actions .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.header-actions .btn-secondary {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+}
+.header-actions .btn-secondary:hover {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* SỬA LỖI: Bỏ giới hạn chiều cao và overflow */
+.table-container {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  overflow-x: auto; /* Chỉ cho phép cuộn ngang nếu cần */
+}
+
+.warehouse-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.warehouse-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.warehouse-table th,
+.warehouse-table td {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.warehouse-table thead th {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #6b7280;
+  background-color: #f9fafb;
+}
+
+/* Style cho status-badge */
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-badge.status-danger {
+  color: #991b1b;
+  background-color: #fee2e2;
+}
+
+.status-badge.status-warning {
+  color: #92400e;
+  background-color: #fef3c7;
+}
+
+.status-badge.status-ok {
+  color: #166534;
+  background-color: #dcfce7;
+}
+
+.actions-column {
+  width: 1%;
+  text-align: center !important;
+}
+.actions-cell {
+  text-align: center;
+}
+
+.btn-icon-only {
+  background: none;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-icon-only:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+  transform: scale(1.1);
+}
+
+.pagination-footer {
+  margin-top: 1.5rem;
+}

@@ -1,0 +1,48 @@
+<app-header></app-header>
+<main class="product-list-container">
+    <div class="page-header">
+        <h1>Thực đơn của chúng tôi</h1>
+        <p>Hãy chọn cho mình một hương vị yêu thích</p>
+    </div>
+
+    <div class="product-grid" *ngIf="!isLoading && products.length > 0">
+        <a [routerLink]="['/products', product.id]" class="product-card" *ngFor="let product of products">
+            <div class="card-image">
+                <img [src]="product.imageUrl" [alt]="product.name"
+                    onerror="this.src='https://placehold.co/400x500/eee/ccc?text=Image+Error'">
+                <div class="overlay"><span>Xem chi tiết</span></div>
+            </div>
+            <div class="card-content">
+                <h3>{{ product.name }}</h3>
+                <span class="price">{{ product.price | number }}đ</span>
+            </div>
+        </a>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-state">
+        <div class="loader"></div>
+    </div>
+
+    <nav class="pagination-nav" *ngIf="pagination && pagination.totalPages > 1">
+        <ul>
+            <li [class.disabled]="!pagination.hasPreviousPage">
+                <a (click)="goToPage(1)" title="Trang đầu">«</a>
+            </li>
+            <li [class.disabled]="!pagination.hasPreviousPage">
+                <a (click)="goToPage(pagination.pageNumber - 1)">‹</a>
+            </li>
+
+            <li *ngFor="let pageNum of paginationWindow">
+                <a (click)="goToPage(pageNum)" [class.active]="pageNum === pagination.pageNumber">{{ pageNum }}</a>
+            </li>
+
+            <li [class.disabled]="!pagination.hasNextPage">
+                <a (click)="goToPage(pagination.pageNumber + 1)">›</a>
+            </li>
+            <li [class.disabled]="!pagination.hasNextPage">
+                <a (click)="goToPage(pagination.totalPages)" title="Trang cuối">»</a>
+            </li>
+        </ul>
+    </nav>
+</main>
+<app-footer></app-footer>

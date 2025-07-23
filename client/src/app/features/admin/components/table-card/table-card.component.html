@@ -1,0 +1,43 @@
+<div class="table-card" [ngClass]="table.status.toLowerCase()">
+    <div class="card-header">
+        <span class="table-icon material-symbols-outlined">
+            {{ table.status === 'Occupied' ? 'Có khách' : (table.status === 'Maintenance' ? 'Bảo Trì' : 'Trống') }}
+        </span>
+        <div class="header-content">
+            <h3 class="table-name">{{ table.name }}</h3>
+            <span class="status-text">{{ table.status }}</span>
+        </div>
+        <!-- Menu Sửa/Xóa -->
+        <div class="menu-container">
+            <button class="menu-toggle-btn" (click)="isMenuOpen = !isMenuOpen" (blur)="isMenuOpen = false">
+                <span class="material-symbols-outlined">Chi Tiết</span>
+            </button>
+            <div class="dropdown-menu" *ngIf="isMenuOpen" (mousedown)="$event.preventDefault()">
+                <button (click)="onEdit()">
+                    <span class="material-symbols-outlined">Sửa</span>
+                </button>
+                <button (click)="onDelete()" class="danger">
+                    <span class="material-symbols-outlined">Xóa</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <p class="footer-title">Cập nhật trạng thái:</p>
+        <div class="status-actions">
+            <button class="status-btn available" [class.active]="table.status === 'Available'"
+                (click)="changeStatus('Available')">
+                Trống
+            </button>
+            <button class="status-btn occupied" [class.active]="table.status === 'Occupied'"
+                (click)="changeStatus('Occupied')">
+                Có khách
+            </button>
+            <button class="status-btn maintenance" [class.active]="table.status === 'Maintenance'"
+                (click)="changeStatus('Maintenance')">
+                Bảo trì
+            </button>
+        </div>
+    </div>
+</div>

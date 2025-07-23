@@ -1,0 +1,125 @@
+.product-detail-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 8rem 2rem 4rem;
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+.product-image-container img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+.product-name {
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.product-description {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 1rem 0 2rem;
+  line-height: 1.7;
+}
+.option-group {
+  margin-bottom: 2rem;
+}
+.option-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 0.5rem;
+}
+.size-options {
+  display: flex;
+  gap: 1rem;
+}
+.size-label {
+  display: block;
+  padding: 0.8rem 1.5rem;
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.size-label input {
+  display: none;
+}
+.size-label.selected {
+  border-color: #8e6a47;
+  background-color: #f8f5f2;
+  font-weight: 700;
+}
+.topping-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.topping-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.topping-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+.topping-label input {
+  width: 18px;
+  height: 18px;
+  accent-color: #8e6a47;
+}
+.topping-price {
+  font-weight: 500;
+  color: #333;
+}
+.actions-group {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  border: 2px solid #ddd;
+  border-radius: 50px;
+}
+.quantity-selector button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: #555;
+}
+.quantity-selector span {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0 0.5rem;
+}
+.add-to-cart-btn {
+  flex-grow: 1;
+  background: #8e6a47;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.add-to-cart-btn:hover {
+  background: #7a5a3a;
+}

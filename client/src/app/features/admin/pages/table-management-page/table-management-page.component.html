@@ -1,0 +1,62 @@
+<div class="table-management-container">
+
+    <header class="page-header">
+        <div>
+            <h1 class="page-title">Quản Lý Bàn</h1>
+            <p class="page-subtitle">Thêm, sửa, xóa và cập nhật trạng thái các bàn.</p>
+        </div>
+        <button (click)="openAddTableModal()" class="btn btn-primary">
+            <span class="material-symbols-outlined">Thêm Bàn Mới</span>
+
+        </button>
+    </header>
+
+    <main *ngIf="tables$ | async as tables; else loading">
+        <div *ngIf="tables.length > 0; else emptyState" class="table-grid">
+            <app-table-card *ngFor="let table of tables" [table]="table" (edit)="openEditTableModal($event)"
+                (delete)="openDeleteConfirmModal($event)" (statusChange)="handleStatusChange($event)">
+            </app-table-card>
+        </div>
+    </main>
+
+    <ng-template #loading>
+        <div class="loading-state">
+            <div class="loader"></div>
+            <p>Đang tải danh sách bàn...</p>
+        </div>
+    </ng-template>
+
+    <ng-template #emptyState>
+        <div class="empty-state">
+            <span class="material-symbols-outlined empty-icon">deck</span>
+            <h3>Chưa có bàn nào</h3>
+            <p>Hãy bắt đầu bằng cách thêm một bàn mới.</p>
+        </div>
+    </ng-template>
+</div>
+
+<!-- Modal Form Thêm/Sửa -->
+<app-modal [isOpen]="isFormModalOpen" (close)="isFormModalOpen = false">
+    <app-table-form [tableToEdit]="tableToEdit" (formSaved)="handleFormSave($event)"
+        (formCanceled)="isFormModalOpen = false">
+    </app-table-form>
+</app-modal>
+
+<!-- Modal Xác nhận Xóa -->
+<app-modal [isOpen]="isDeleteModalOpen" (close)="isDeleteModalOpen = false">
+    <div class="confirm-dialog" *ngIf="tableToDelete">
+        <div class="dialog-header">
+            <div class="dialog-icon-wrapper danger">
+                <span class="material-symbols-outlined">Cảnh báo</span>
+            </div>
+            <div class="dialog-title-content">
+                <h3>Xóa bàn "{{ tableToDelete.name }}"</h3>
+                <p>Bạn có chắc chắn muốn xóa bàn này không? Hành động này không thể được hoàn tác.</p>
+            </div>
+        </div>
+        <div class="dialog-actions">
+            <button (click)="isDeleteModalOpen = false" type="button" class="btn btn-secondary">Hủy</button>
+            <button (click)="handleDeleteConfirm()" type="button" class="btn btn-danger">Xóa</button>
+        </div>
+    </div>
+</app-modal>

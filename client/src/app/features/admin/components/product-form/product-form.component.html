@@ -1,0 +1,96 @@
+<div class="product-form-container">
+    <div class="form-header">
+        <h2 class="form-title">{{ productToEdit ? 'Sửa Sản Phẩm' : 'Thêm Sản Phẩm Mới' }}</h2>
+        <button (click)="cancel()" class="close-btn">
+            <span class="material-symbols-outlined">Đóng</span>
+        </button>
+    </div>
+
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form-body">
+        <div class="form-grid">
+            <!-- Left Column -->
+            <div class="form-column">
+                <!-- Image Uploader -->
+                <div class="form-group">
+                    <label class="form-label">Hình ảnh</label>
+                    <div class="image-uploader">
+                        <div class="image-uploader-content">
+                            <img [src]="imagePreview" alt="Xem trước ảnh" class="image-preview">
+                            <div class="image-uploader-actions">
+                                <label for="imageFile" class="image-upload-label">
+                                    <span>Tải lên một tệp</span>
+                                    <input id="imageFile" name="imageFile" type="file" class="sr-only" accept="image/*"
+                                        (change)="onFileChange($event)">
+                                </label>
+                            </div>
+                            <p class="image-uploader-hint">PNG, JPG, GIF tối đa 10MB</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="name" class="form-label">Tên sản phẩm</label>
+                    <input type="text" id="name" formControlName="name" class="form-control">
+                </div>
+                <!-- Price -->
+                <div class="form-group">
+                    <label for="price" class="form-label">Giá (VND)</label>
+                    <input type="number" id="price" formControlName="price" class="form-control">
+                </div>
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="note" class="form-label">Mô tả</label>
+                    <textarea id="note" formControlName="note" rows="4" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="form-column ingredients-column">
+                <div class="ingredients-header">
+                    <label class="form-label">Thành phần nguyên liệu</label>
+                    <button type="button" (click)="addRecipeItem()" class="btn-add-ingredient">
+                        Thêm
+                    </button>
+                </div>
+                <div formArrayName="recipeItems" class="ingredients-list">
+                    <div *ngFor="let item of recipeItems.controls; let i=index" [formGroupName]="i"
+                        class="ingredient-item">
+                        <div class="ingredient-item-grid">
+                            <!-- Ingredient Select -->
+                            <div class="ingredient-select-wrapper">
+                                <select formControlName="ingredientId" class="form-control">
+                                    <option value="" disabled>Chọn nguyên liệu</option>
+                                    <option *ngFor="let ing of ingredients$ | async" [value]="ing.id">{{ ing.name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <!-- Quantity -->
+                            <div class="ingredient-input-wrapper">
+                                <input type="number" placeholder="SL" formControlName="quantity" class="form-control">
+                            </div>
+                            <!-- Unit -->
+                            <div class="ingredient-input-wrapper">
+                                <input type="text" placeholder="Đơn vị" formControlName="unit" class="form-control">
+                            </div>
+                            <!-- Remove Button -->
+                            <div class="ingredient-action-wrapper">
+                                <button type="button" (click)="removeRecipeItem(i)" class="btn-remove-ingredient">
+                                    <span class="material-symbols-outlined">Xóa</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <p *ngIf="recipeItems.length === 0" class="no-ingredients-text">Chưa có nguyên liệu nào.</p>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="form-footer">
+        <div class="footer-actions">
+            <button type="button" (click)="cancel()" class="btn btn-secondary">Hủy</button>
+            <button type="submit" (click)="onSubmit()" [disabled]="productForm.invalid" class="btn btn-primary">Lưu Sản
+                Phẩm</button>
+        </div>
+    </div>
+</div>

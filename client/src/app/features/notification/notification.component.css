@@ -1,0 +1,74 @@
+/* notification.component.css */
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap");
+
+:host {
+  --toast-font-family: "Be Vietnam Pro", sans-serif;
+  --toast-success-bg: #2ecc71;
+  --toast-error-bg: #e74c3c;
+  --toast-info-bg: #3498db;
+  --toast-text-color: #ffffff;
+}
+
+.toast {
+  /* Vị trí cố định ở góc trên bên phải */
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+
+  /* Thiết kế chung */
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  border-radius: 10px;
+  min-width: 320px;
+  max-width: 400px;
+  color: var(--toast-text-color);
+  font-family: var(--toast-font-family);
+  font-size: 15px;
+  line-height: 1.5;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  opacity: 0;
+  transform: translateX(110%);
+}
+
+.toast.success {
+  background-color: var(--toast-success-bg);
+}
+.toast.error {
+  background-color: var(--toast-error-bg);
+}
+.toast.info {
+  background-color: var(--toast-info-bg);
+}
+
+.toast-icon {
+  flex-shrink: 0;
+  margin-right: 15px;
+  font-size: 24px;
+  width: 30px;
+  text-align: center;
+}
+
+.toast-message {
+  flex-grow: 1;
+  font-weight: 500;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: var(--toast-text-color);
+  opacity: 0.7;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 15px;
+  padding: 0;
+  line-height: 1;
+}
+
+.toast-close:hover {
+  opacity: 1;
+}

@@ -1,0 +1,62 @@
+/* src/app/features/admin/layouts/admin-layout/admin-layout.component.css */
+
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f7f9fc;
+}
+
+.sidebar-wrapper {
+  flex-shrink: 0;
+  width: 260px; /* Chiều rộng mặc định */
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+  /* Thêm hiệu ứng chuyển động mượt mà */
+  transition: width 0.3s ease-in-out;
+}
+
+/* Khi sidebar bị thu gọn */
+.admin-container.sidebar-collapsed .sidebar-wrapper {
+  width: 90px; /* Chiều rộng khi thu gọn (chỉ đủ cho icon) */
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 2.5rem;
+  overflow-y: auto;
+}
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc; /* Một màu xám rất nhạt */
+}
+
+.sidebar-wrapper {
+  flex-shrink: 0;
+  width: 260px;
+  background-color: #ffffff;
+  box-shadow: inset -1px 0 0 0 #e5e7eb; /* Thêm đường viền bên trong tinh tế */
+  z-index: 10;
+  transition: width 0.3s ease-in-out;
+}
+
+/* Khi sidebar bị thu gọn */
+.admin-container.sidebar-collapsed .sidebar-wrapper {
+  width: 90px;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 2.5rem;
+  overflow-y: auto;
+
+  /* === SỬA LỖI CĂN CHỈNH TẠI ĐÂY === */
+
+  /* Giới hạn chiều rộng tối đa của nội dung */
+  max-width: 1400px;
+
+  /* Tự động căn giữa theo chiều ngang */
+  margin-left: auto;
+  margin-right: auto;
+}

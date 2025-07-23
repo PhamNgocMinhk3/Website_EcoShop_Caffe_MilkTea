@@ -1,0 +1,187 @@
+:host {
+  --status-available: #22c55e;
+  --status-occupied: #ef4444;
+  --status-maintenance: #f97316;
+  --bg-available: #f0fdf4;
+  --bg-occupied: #fef2f2;
+  --bg-maintenance: #fff7ed;
+  --border-available: #bbf7d0;
+  --border-occupied: #fecaca;
+  --border-maintenance: #fed7aa;
+}
+
+.table-card {
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+}
+
+.table-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  position: relative;
+}
+
+.table-icon {
+  font-size: 2.5rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+.available .table-icon {
+  color: var(--status-available);
+  background-color: var(--bg-available);
+}
+.occupied .table-icon {
+  color: var(--status-occupied);
+  background-color: var(--bg-occupied);
+}
+.maintenance .table-icon {
+  color: var(--status-maintenance);
+  background-color: var(--bg-maintenance);
+}
+
+.header-content {
+  flex-grow: 1;
+}
+
+.table-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.status-text {
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.card-footer {
+  margin-top: auto;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+.footer-title {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+}
+
+.status-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.status-btn {
+  flex: 1;
+  padding: 0.4rem;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.status-btn.available {
+  background-color: var(--bg-available);
+  color: var(--status-available);
+  border-color: var(--border-available);
+}
+.status-btn.occupied {
+  background-color: var(--bg-occupied);
+  color: var(--status-occupied);
+  border-color: var(--border-occupied);
+}
+.status-btn.maintenance {
+  background-color: var(--bg-maintenance);
+  color: var(--status-maintenance);
+  border-color: var(--border-maintenance);
+}
+
+.status-btn:not(.active) {
+  opacity: 0.6;
+}
+.status-btn:not(.active):hover {
+  opacity: 1;
+}
+
+.status-btn.active {
+  color: white;
+}
+.status-btn.active.available {
+  background-color: var(--status-available);
+}
+.status-btn.active.occupied {
+  background-color: var(--status-occupied);
+}
+.status-btn.active.maintenance {
+  background-color: var(--status-maintenance);
+}
+
+.menu-container {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.menu-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+}
+.menu-toggle-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.25rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 0;
+  width: 160px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-menu button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+}
+.dropdown-menu button:hover {
+  background-color: #f3f4f6;
+}
+.dropdown-menu button .material-symbols-outlined {
+  font-size: 1.25rem;
+}
+.dropdown-menu button.danger {
+  color: #ef4444;
+}

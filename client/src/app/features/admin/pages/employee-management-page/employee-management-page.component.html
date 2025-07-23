@@ -1,0 +1,107 @@
+<div class="employee-management-container">
+
+    <header class="page-header">
+        <div>
+            <h1 class="page-title">Quản Lý Nhân Viên</h1>
+            <p class="page-subtitle">Quản lý thông tin chi tiết của các nhân viên.</p>
+        </div>
+        <div class="header-actions">
+            <button (click)="refreshData()" class="btn btn-icon-only" title="Tải lại dữ liệu">
+                <span class="material-symbols-outlined"></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="table-container">
+        <table class="employee-table" *ngIf="employees$ | async as employees; else loading">
+            <thead>
+                <tr>
+                    <!-- SỬA LỖI: Thay "Tên đăng nhập" bằng "Email" -->
+                    <th>Email</th>
+                    <th>Họ Tên</th>
+                    <th>Trạng thái</th>
+                    <th class="actions-column">Hành động</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="employees.length > 0; else emptyState">
+                <tr *ngFor="let emp of employees" class="employee-row">
+                    <!-- SỬA LỖI: Hiển thị emp.email -->
+                    <td>{{ emp.email }}</td>
+                    <td>{{ emp.hoTen || 'N/A' }}</td>
+                    <td>
+                        <span class="status-badge"
+                            [ngClass]="emp.status === 'Đã có thông tin' ? 'status-filled' : 'status-missing'">
+                            {{ emp.status }}
+                        </span>
+                    </td>
+                    <td class="actions-cell">
+                        <div *ngIf="emp.status === 'Chưa có thông tin'" class="action-group">
+                            <button (click)="openFormModal(emp)" class="btn btn-primary btn-sm">
+                                <span class="material-symbols-outlined">Thêm</span>
+                                Nhập tay
+                            </button>
+                            <button (click)="openImportModal(emp)" class="btn btn-secondary btn-sm">
+                                <span class="material-symbols-outlined">Tải file lên</span>
+                                Import
+                            </button>
+                        </div>
+                        <div *ngIf="emp.status === 'Đã có thông tin'" class="action-group">
+                            <button (click)="openFormModal(emp)" class="btn btn-icon-only" title="Sửa thông tin">
+                                <span class="material-symbols-outlined">Sữa</span>
+                            </button>
+                            <button (click)="openDeleteConfirmModal(emp)" class="btn btn-icon-only btn-danger-icon"
+                                title="Xóa thông tin">
+                                <span class="material-symbols-outlined">Xóa</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <ng-template #emptyState>
+                <tr class="empty-row">
+                    <td colspan="4">Không tìm thấy nhân viên nào.</td>
+                </tr>
+            </ng-template>
+        </table>
+    </main>
+
+    <ng-template #loading>
+        <div class="loading-state">
+            <div class="loader"></div>
+            <p>Đang tải danh sách nhân viên...</p>
+        </div>
+    </ng-template>
+</div>
+
+<!-- Modals -->
+<app-modal [isOpen]="isFormModalOpen" (close)="isFormModalOpen = false">
+    <app-employee-form [employeeVm]="selectedEmployee" (formSaved)="handleFormSave($event)"
+        (formCanceled)="isFormModalOpen = false">
+    </app-employee-form>
+</app-modal>
+
+<app-modal [isOpen]="isImportModalOpen" (close)="isImportModalOpen = false">
+    <app-employee-import [employeeVm]="selectedEmployee" (importSuccess)="handleImportSuccess()"
+        (importCanceled)="isImportModalOpen = false">
+    </app-employee-import>
+</app-modal>
+
+<app-modal [isOpen]="isDeleteModalOpen" (close)="isDeleteModalOpen = false">
+    <div class="confirm-dialog" *ngIf="employeeToDelete">
+        <div class="dialog-header">
+            <div class="dialog-icon-wrapper danger">
+                <span class="material-symbols-outlined">warning</span>
+            </div>
+            <div class="dialog-title-content">
+                <h3>Xóa thông tin nhân viên?</h3>
+                <!-- SỬA LỖI: Dùng email làm phương án dự phòng nếu chưa có họ tên -->
+                <p>Bạn có chắc muốn xóa thông tin của <strong>{{ employeeToDelete.hoTen || employeeToDelete.email
+                        }}</strong>? Hành động này sẽ không xóa tài khoản người dùng.</p>
+            </div>
+        </div>
+        <div class="dialog-actions">
+            <button (click)="isDeleteModalOpen = false" type="button" class="btn btn-secondary">Hủy</button>
+            <button (click)="handleDeleteConfirm()" type="button" class="btn btn-danger">Xóa</button>
+        </div>
+    </div>
+</app-modal>

@@ -1,0 +1,135 @@
+<div class="stats-container">
+    <header class="stats-header">
+        <h1>Báo Cáo & Thống Kê</h1>
+        <p>Phân tích chi tiết về hiệu suất kinh doanh của cửa hàng.</p>
+    </header>
+
+    <div *ngIf="isLoading" class="loading-state">
+        <div class="spinner"></div>
+    </div>
+
+    <div *ngIf="!isLoading" class="stats-grid">
+        <!-- Chức năng 5: Biểu đồ Doanh Thu -->
+        <div class="stat-card full-width stat-card-chart">
+            <h2><span class="material-symbols-outlined">show_chart</span>Doanh Thu Theo Thời Gian</h2>
+            <div class="chart-wrapper">
+                <canvas #revenueChart></canvas>
+            </div>
+        </div>
+
+        <!-- Chức năng 6 & 7: Top Sản Phẩm -->
+        <div class="stat-card product-card">
+            <h2><span class="material-symbols-outlined">sell</span>Top Sản Phẩm (Doanh Thu)</h2>
+            <ul class="ranked-list">
+                <li *ngFor="let item of productStats?.topByRevenue; let i = index">
+                    <span class="rank">{{ i + 1 }}</span>
+                    <span class="name">{{ item.productName }}</span>
+                    <span class="value">{{ item.totalRevenue | currency:'VND':'symbol':'1.0-0' }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="stat-card product-card">
+            <h2><span class="material-symbols-outlined">local_mall</span>Top Sản Phẩm (Số Lượng)</h2>
+            <ul class="ranked-list">
+                <li *ngFor="let item of productStats?.topByQuantity; let i = index">
+                    <span class="rank">{{ i + 1 }}</span>
+                    <span class="name">{{ item.productName }}</span>
+                    <span class="value">{{ item.totalQuantity }} ly</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Chức năng 8: Top Topping -->
+        <div class="stat-card topping-card">
+            <h2><span class="material-symbols-outlined">tapas</span>Top Topping Phổ Biến</h2>
+            <ul class="ranked-list">
+                <li *ngFor="let item of topToppings; let i = index">
+                    <span class="rank">{{ i + 1 }}</span>
+                    <span class="name">{{ item.toppingName }}</span>
+                    <span class="value">{{ item.usageCount }} lượt</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Chức năng 9: Sản Phẩm Bán Chậm -->
+        <div class="stat-card product-card">
+            <h2><span class="material-symbols-outlined">trending_down</span>Sản Phẩm Bán Chậm</h2>
+            <ul class="ranked-list">
+                <li *ngFor="let item of productStats?.leastPopular; let i = index">
+                    <span class="rank">{{ i + 1 }}</span>
+                    <span class="name">{{ item.productName }}</span>
+                    <span class="value">{{ item.totalQuantity }} ly</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Chức năng 11: Top Nhân Viên -->
+        <div class="stat-card large-card employee-card">
+            <h2><span class="material-symbols-outlined">workspace_premium</span>Bảng Xếp Hạng Nhân Viên</h2>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Hạng</th>
+                            <th>Họ Tên</th>
+                            <th>Tổng Đơn</th>
+                            <th>Tổng Doanh Thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let emp of topEmployees; let i = index">
+                            <td><span class="rank">{{ i + 1 }}</span></td>
+                            <td>{{ emp.hoTen }}</td>
+                            <td>{{ emp.totalOrders }}</td>
+                            <td>{{ emp.totalRevenue | currency:'VND':'symbol':'1.0-0' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Chức năng 12: Chuyên Cần -->
+        <div class="stat-card large-card employee-card">
+            <h2><span class="material-symbols-outlined">schedule</span>Thống Kê Chuyên Cần</h2>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Họ Tên</th>
+                            <th>Giờ Làm</th>
+                            <th>Đi Trễ</th>
+                            <th>Quên Checkout</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let att of employeeAttendance">
+                            <td>{{ att.hoTen }}</td>
+                            <td>{{ att.totalHoursWorked | number:'1.1-2' }} giờ</td>
+                            <td>{{ att.lateCount }} lần</td>
+                            <td>{{ att.forgotCheckoutCount }} lần</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Chức năng 13 & 14: Tồn Kho -->
+        <div class="stat-card inventory-card">
+            <h2><span class="material-symbols-outlined">inventory</span>Giá Trị Tồn Kho</h2>
+            <p class="inventory-value">{{ inventoryStats?.totalInventoryValue | currency:'VND':'symbol':'1.0-0' }}</p>
+        </div>
+        <div class="stat-card inventory-card low-stock-card">
+            <h2><span class="material-symbols-outlined">production_quantity_limits</span>Cảnh Báo Tồn Kho Thấp</h2>
+            <ul class="ranked-list">
+                <li *ngFor="let item of inventoryStats?.lowStockItems">
+                    <span class="material-symbols-outlined icon-warning">Cảnh Báo</span>
+                    <span class="name">{{ item.name }}</span>
+                    <span class="value">{{ item.currentStock | number:'1.1-2' }} {{ item.unit }}</span>
+                </li>
+                <p *ngIf="!inventoryStats || !inventoryStats.lowStockItems || inventoryStats.lowStockItems.length === 0"
+                    class="no-warning">Không có nguyên liệu nào dưới ngưỡng.</p>
+            </ul>
+        </div>
+
+    </div>
+</div>

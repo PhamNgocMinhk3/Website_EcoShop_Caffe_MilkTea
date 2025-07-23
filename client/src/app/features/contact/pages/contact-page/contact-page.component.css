@@ -1,0 +1,124 @@
+:host {
+  font-family: "Quicksand", sans-serif;
+  background-color: #f8f5f2;
+}
+.contact-page-container {
+  padding-top: 8rem; /* Khoảng cách với header */
+  padding-bottom: 4rem;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+.contact-form-wrapper {
+  padding: 4rem;
+}
+.form-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #333;
+}
+.form-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.info-item svg {
+  width: 24px;
+  height: 24px;
+  color: #8e6a47;
+}
+.info-item a {
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.info-item a:hover {
+  color: #8e6a47;
+}
+.form-field {
+  margin-bottom: 1.5rem;
+}
+.form-field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: #d3bca8;
+  box-shadow: 0 0 0 3px rgba(211, 188, 168, 0.5);
+}
+.form-field textarea {
+  resize: vertical;
+}
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  background: #8e6a47;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.submit-btn:hover {
+  background-color: #7a5a3a;
+}
+.submit-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.contact-map-wrapper {
+  background-color: #f0eade;
+  position: relative;
+  overflow: hidden;
+}
+.map-illustration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+/* Responsive */
+@media (max-width: 992px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+  .contact-map-wrapper {
+    min-height: 400px;
+  }
+}

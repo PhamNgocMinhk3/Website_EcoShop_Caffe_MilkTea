@@ -1,0 +1,31 @@
+<div class="form-content">
+    <h2 class="anim-element">Tạo Tài Khoản</h2>
+    <p class="anim-element">Tham gia cộng đồng yêu trà sữa của chúng tôi.</p>
+    <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate>
+        <div class="form-group anim-element">
+            <label for="reg-email">Email</label>
+            <input type="email" id="reg-email" name="email" [(ngModel)]="credentials.email" required>
+        </div>
+        <div class="form-group anim-element">
+            <label for="reg-password">Mật khẩu</label>
+            <input type="password" id="reg-password" name="password" [(ngModel)]="credentials.password" required>
+        </div>
+        <div class="form-group anim-element">
+            <label for="reg-confirm-password">Xác nhận Mật khẩu</label>
+            <input type="password" id="reg-confirm-password" name="confirmPassword"
+                [(ngModel)]="credentials.confirmPassword" required>
+        </div>
+
+        <!-- Vùng hiển thị thông báo đã được xóa bỏ -->
+
+        <div class="form-actions anim-element">
+            <button type="submit" [disabled]="isLoading || !registerForm.valid">
+                {{ isLoading ? 'Đang xử lý...' : 'Đăng Ký' }}
+            </button>
+        </div>
+        <p class="form-footer anim-element">
+            Đã có tài khoản?
+            <a routerLink="../login">Đăng nhập</a>
+        </p>
+    </form>
+</div>

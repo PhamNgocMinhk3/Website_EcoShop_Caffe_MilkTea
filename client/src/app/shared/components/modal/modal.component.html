@@ -1,0 +1,10 @@
+<div class="modal-wrapper" [class.is-open]="isOpen">
+    <!-- Backdrop -->
+    <div class="modal-backdrop" (click)="closeModal()"></div>
+
+    <!-- Modal Content -->
+    <div class="modal-content">
+        <!-- Nội dung từ component cha sẽ được chiếu vào đây -->
+        <ng-content></ng-content>
+    </div>
+</div>

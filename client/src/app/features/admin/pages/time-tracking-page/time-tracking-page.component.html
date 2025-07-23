@@ -1,0 +1,57 @@
+<!-- Container chính với hiệu ứng nền gradient -->
+<div #container class="container">
+    <!-- Thẻ chứa đồng hồ analog -->
+    <div #clockCard class="card clock-card">
+        <svg viewBox="0 0 200 200" class="clock-svg">
+            <!-- Mặt đồng hồ -->
+            <circle cx="100" cy="100" r="98" class="clock-face" />
+            <!-- Các vạch giờ -->
+            <g *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                <line class="hour-tick" x1="100" y1="10" x2="100" y2="20"
+                    [attr.transform]="'rotate(' + i * 30 + ' 100 100)'" />
+            </g>
+            <!-- Kim đồng hồ -->
+            <line #hourHand class="hand hour-hand" x1="100" y1="100" x2="100" y2="60" />
+            <line #minuteHand class="hand minute-hand" x1="100" y1="100" x2="100" y2="40" />
+            <line #secondHand class="hand second-hand" x1="100" y1="100" x2="100" y2="30" />
+            <circle cx="100" cy="100" r="4" class="center-pin" />
+        </svg>
+        <!-- Hiển thị thời gian số -->
+        <div class="digital-clock">{{ currentTime | date:'HH:mm:ss' }}</div>
+        <div class="date-display">{{ currentTime | date:'EEEE, dd/MM/yyyy':'vi' }}</div>
+    </div>
+
+    <!-- Thẻ chứa thông tin trạng thái chấm công -->
+    <div #statusCard class="card status-card">
+        <div *ngIf="isLoading" class="loader">Đang tải...</div>
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+        <ng-container *ngIf="!isLoading && shiftStatus">
+            <div *ngIf="shiftStatus.coCaLamViec; else noShift">
+                <h2 class="welcome-message">Chào, {{ shiftStatus.hoTen }}!</h2>
+                <!-- Sử dụng getter 'statusClass' để tránh lỗi undefined -->
+                <div class="status-badge" [ngClass]="statusClass">
+                    {{ shiftStatus.trangThaiChamCong }}
+                </div>
+                <p class="shift-time">Ca làm việc: {{ shiftStatus.thoiGianCaLamViec }}</p>
+                <p class="notification">{{ shiftStatus.thongBao }}</p>
+            </div>
+            <ng-template #noShift>
+                <h2 class="welcome-message">Hôm nay bạn không có ca làm.</h2>
+                <p class="notification">{{ shiftStatus.thongBao }}</p>
+            </ng-template>
+        </ng-container>
+    </div>
+
+    <!-- Các nút hành động Check-in/Check-out -->
+    <div #actions class="actions" *ngIf="!isLoading && shiftStatus?.coCaLamViec">
+        <button class="btn check-in-btn" (click)="onCheckIn()"
+            [disabled]="shiftStatus?.trangThaiChamCong !== 'Chưa chấm công'">
+            <span class="material-symbols-outlined">login</span> Check-in
+        </button>
+        <button class="btn check-out-btn" (click)="onCheckOut()"
+            [disabled]="shiftStatus?.trangThaiChamCong !== 'Đã vào ca'">
+            <span class="material-symbols-outlined">logout</span> Check-out
+        </button>
+    </div>
+</div>

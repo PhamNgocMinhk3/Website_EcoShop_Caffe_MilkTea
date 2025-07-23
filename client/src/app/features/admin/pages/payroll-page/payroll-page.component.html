@@ -1,0 +1,117 @@
+<!-- payroll-page.component.html -->
+<div class="payroll-container">
+    <!-- Header: Title, Filters, and Actions -->
+    <header #header class="payroll-header">
+        <h1 class="header-title">Bảng Lương Nhân Viên</h1>
+
+        <div class="controls">
+            <!-- Month Selector -->
+            <div class="control-group">
+                <label for="month-select">Tháng:</label>
+                <select id="month-select" [(ngModel)]="selectedMonth" (ngModelChange)="onDateChange()"
+                    class="select-box">
+                    <option *ngFor="let month of months" [value]="month">{{ month }}</option>
+                </select>
+            </div>
+
+            <!-- Year Selector -->
+            <div class="control-group">
+                <label for="year-select">Năm:</label>
+                <select id="year-select" [(ngModel)]="selectedYear" (ngModelChange)="onDateChange()" class="select-box">
+                    <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
+                </select>
+            </div>
+
+            <!-- Export Button -->
+            <button class="export-btn" (click)="exportToExcel()" [disabled]="isExporting || isLoading">
+                <span *ngIf="!isExporting" class="material-symbols-outlined">download</span>
+                <span *ngIf="isExporting" class="spinner"></span>
+                {{ isExporting ? 'Đang xuất...' : 'Xuất Excel' }}
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content: Table or Status Messages -->
+    <main #tableContainer class="table-wrapper">
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="status-message">
+            <div class="spinner-large"></div>
+            <p>Đang tải dữ liệu...</p>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="errorMessage && !isLoading" class="status-message error">
+            <span class="material-symbols-outlined">error</span>
+            <p>{{ errorMessage }}</p>
+        </div>
+
+        <!-- Data State -->
+        <div *ngIf="!isLoading && !errorMessage" class="table-scroll-container">
+            <!-- Empty State -->
+            <div *ngIf="payrollData.length === 0" class="status-message">
+                <span class="material-symbols-outlined">info</span>
+                <p>Không có dữ liệu lương cho tháng {{ selectedMonth }}/{{ selectedYear }}.</p>
+            </div>
+
+            <!-- Payroll Table -->
+            <table *ngIf="payrollData.length > 0" class="payroll-table">
+                <thead>
+                    <tr>
+                        <th>Mã NV</th>
+                        <th>Họ Tên</th>
+                        <th>Loại NV</th>
+                        <th>SĐT / Email</th>
+                        <th>Công Việc</th>
+                        <th>Giờ Làm</th>
+                        <th>Lương/Giờ</th>
+                        <th>Tổng Lương</th>
+                        <th>Tiền Phạt</th>
+                        <th>Thực Lãnh</th>
+                        <th>Ghi Chú</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let record of payrollData">
+                        <td data-label="Mã NV">{{ record.maNV }}</td>
+                        <td data-label="Họ Tên">
+                            <div class="user-info">{{ record.hoTen }}</div>
+                        </td>
+                        <td data-label="Loại NV">
+                            <span class="badge"
+                                [ngClass]="record.loaiNhanVien === 'Full-time' ? 'badge-full-time' : 'badge-part-time'">
+                                {{ record.loaiNhanVien }}
+                            </span>
+                        </td>
+                        <td data-label="SĐT / Email">
+                            <div class="contact-info">
+                                <span>{{ record.soDienThoai }}</span>
+                                <span>{{ record.email }}</span>
+                            </div>
+                        </td>
+                        <td data-label="Công Việc">
+                            <div class="work-details">
+                                <span>Ca phân công: <strong>{{ record.soCaPhanCong }}</strong></span>
+                                <span>Ca đi làm: <strong>{{ record.soCaDiLam }}</strong></span>
+                                <span>Đi trễ: <strong [class.text-danger]="record.soLanDiTre > 0">{{ record.soLanDiTre
+                                        }} lần</strong></span>
+                            </div>
+                        </td>
+                        <td data-label="Giờ Làm">{{ record.tongGioLam | number:'1.1-2' }} giờ</td>
+                        <!-- SỬA LỖI: Hiển thị lương theo giờ -->
+                        <td data-label="Lương/Giờ">{{ record.luongCoBanTheoGio | currency:'VND':'symbol':'1.0-0' }}</td>
+                        <!-- THÊM MỚI: Hiển thị tổng lương trước phạt -->
+                        <td data-label="Tổng Lương">{{ record.tongLuongTruocPhat | currency:'VND':'symbol':'1.0-0' }}
+                        </td>
+                        <td data-label="Tiền Phạt" [class.text-danger]="record.tienPhat > 0">
+                            {{ record.tienPhat | currency:'VND':'symbol':'1.0-0' }}
+                        </td>
+                        <td data-label="Thực Lãnh" class="final-salary">
+                            {{ record.luongThucLanh | currency:'VND':'symbol':'1.0-0' }}
+                        </td>
+                        <td data-label="Ghi Chú">{{ record.ghiChu || 'Không có' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>

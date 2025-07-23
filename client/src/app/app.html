@@ -1,0 +1,8 @@
+<!-- Thêm vùng chứa notification vào cuối file -->
+<router-outlet></router-outlet>
+
+<div class="notification-container">
+    <app-notification *ngFor="let notification of notifications; let i = index" [message]="notification.message"
+        [type]="notification.type" [duration]="notification.duration || 3000" (close)="onNotificationClose(i)">
+    </app-notification>
+</div>

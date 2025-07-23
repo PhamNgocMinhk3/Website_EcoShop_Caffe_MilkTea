@@ -1,0 +1,39 @@
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000; /* Đảm bảo modal ở lớp trên cùng */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  /* Bắt đầu ẩn */
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Khi modal được mở, làm cho nó hiện ra */
+.modal-wrapper.is-open {
+  visibility: visible;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(9, 30, 66, 0.54);
+  cursor: pointer;
+  /* Bắt đầu ẩn */
+  opacity: 0;
+}
+
+.modal-content {
+  position: relative; /* Để nằm trên backdrop */
+  z-index: 1001;
+  /* Bắt đầu ẩn */
+  opacity: 0;
+}

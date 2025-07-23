@@ -1,0 +1,246 @@
+/* statistics-page.component.css */
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0");
+
+:host {
+  display: block;
+  font-family: "Be Vietnam Pro", sans-serif;
+  background-color: #f8f9fc;
+}
+
+.stats-container {
+  padding: 2rem 3rem;
+}
+
+.stats-header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+}
+
+.stats-header p {
+  font-size: 1.1rem;
+  color: #858796;
+  margin: 0 0 2.5rem 0;
+}
+
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.spinner {
+  width: 56px;
+  height: 56px;
+  border: 6px solid #e3e6f0;
+  border-radius: 50%;
+  border-top-color: #4e73df;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  align-items: stretch; /* SỬA LỖI: Đảm bảo các card trong 1 hàng cao bằng nhau */
+}
+
+.stat-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 4px solid; /* Thêm viền màu phía trên */
+  display: flex; /* SỬA LỖI: Dùng flexbox để co giãn nội dung */
+  flex-direction: column;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #3a3b45;
+  margin: 0 0 1.5rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e3e6f0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.stat-card h2 .material-symbols-outlined {
+  font-size: 1.5rem;
+}
+
+/* Specific Card Layouts & Colors */
+.stat-card.full-width {
+  grid-column: 1 / -1;
+  border-color: #4e73df;
+}
+.stat-card.full-width h2 {
+  color: #4e73df;
+}
+.stat-card.large-card {
+  grid-column: span 2;
+}
+.stat-card.product-card {
+  border-color: #fd7e14;
+}
+.stat-card.product-card h2 {
+  color: #fd7e14;
+}
+.stat-card.topping-card {
+  border-color: #6f42c1;
+}
+.stat-card.topping-card h2 {
+  color: #6f42c1;
+}
+.stat-card.employee-card {
+  border-color: #1cc88a;
+}
+.stat-card.employee-card h2 {
+  color: #1cc88a;
+}
+.stat-card.inventory-card {
+  border-color: #e74a3b;
+}
+.stat-card.inventory-card h2 {
+  color: #e74a3b;
+}
+
+.chart-wrapper {
+  height: 400px;
+  flex-grow: 1; /* Cho phép biểu đồ co giãn */
+}
+
+/* Ranked List Styling */
+.ranked-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1; /* Cho phép danh sách co giãn */
+  display: flex;
+  flex-direction: column;
+}
+.ranked-list li {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+.ranked-list li:last-child {
+  border-bottom: none;
+}
+.ranked-list .rank {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #adb5bd;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.ranked-list li:nth-child(1) .rank {
+  background-color: #ffd700;
+  color: #333;
+}
+.ranked-list li:nth-child(2) .rank {
+  background-color: #c0c0c0;
+}
+.ranked-list li:nth-child(3) .rank {
+  background-color: #cd7f32;
+}
+
+.ranked-list .name {
+  font-weight: 500;
+  color: #5a5c69;
+}
+.ranked-list .value {
+  font-weight: 600;
+  color: #3a3b45;
+  justify-self: end;
+}
+
+/* Table Styling */
+.table-responsive {
+  overflow-x: auto;
+  flex-grow: 1;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.data-table th,
+.data-table td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e3e6f0;
+}
+.data-table thead th {
+  background-color: #f8f9fc;
+  font-weight: 600;
+  color: #858796;
+  font-size: 0.85rem;
+}
+.data-table tbody td {
+  color: #5a5c69;
+}
+.data-table tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+/* Inventory Card Styling */
+.inventory-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #e74a3b;
+  text-align: center;
+  margin: auto 0;
+}
+.low-stock-card .icon-warning {
+  color: #f6c23e;
+}
+.low-stock-card .value {
+  color: #e74a3b;
+  font-weight: 700;
+}
+.no-warning {
+  color: #858796;
+  text-align: center;
+  padding: 2rem 0;
+  margin: auto 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .stat-card.large-card {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-container {
+    padding: 1.5rem;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

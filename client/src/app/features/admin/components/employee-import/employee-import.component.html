@@ -1,0 +1,25 @@
+<div class="form-container">
+    <h3 class="form-title">
+        Import thông tin cho
+        <span class="form-title-highlight">{{ employeeVm?.email }}</span>
+    </h3>
+    <div class="import-body">
+        <p class="import-description">Chọn file Excel (.xlsx) chứa thông tin chi tiết. File phải tuân theo mẫu định dạng
+            của hệ thống.</p>
+        <div class="file-drop-area" [class.has-file]="selectedFile">
+            <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".xlsx, .xls" class="file-input">
+            <label for="fileInput" class="file-label">
+                <span class="material-symbols-outlined file-icon">Tải File</span>
+                <span *ngIf="!selectedFile" class="file-prompt">Kéo thả file vào đây hoặc bấm để chọn</span>
+                <span *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</span>
+            </label>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button type="button" (click)="importCanceled.emit()" class="btn btn-secondary">Hủy</button>
+        <button type="button" (click)="onImport()" [disabled]="!selectedFile || isLoading" class="btn btn-primary">
+            <span *ngIf="!isLoading">Thêm dữ liệu</span>
+            <div *ngIf="isLoading" class="loader-sm"></div>
+        </button>
+    </div>
+</div>
